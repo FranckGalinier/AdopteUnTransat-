@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adopte un transat{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1 class="text-center">Bienvenue sur Adope un transat</h1>
+
+  <p class="text-center">Vous trouverez ci-dessous la liste des transats disponibles à la location.</p>
+
+  <h3 class="text-center"> LE BAR </h3>
+    
+  <div class="container">
+    <div class="row">
+      {% for transat in transats %}
+        <div class="col-4 col-sm-3">
+          <div class="card text-center p-3 m-3">
+            <p>Transat {{ transat.emplacement }}</p>
+            <p>{{ transat.type }} </p>
+           
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#useFactModal{{ transat.id}}">
+              Réserver
+              </button>
+          </div>
+        </div>
+      {% endfor %}
+   </div>
+  </div>
+  <h3 class="text-center">LA PLAGE</h3>
+</div>
+
+
+ {% for transat in transats %}
+    <!-- Modal -->
+<div class="modal fade" id="useFactModal{{transat.id}}" tabindex="-1" role="dialog" aria-labelledby="useFactModal{{transat.id}}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="useFactModal{{transat.id}}">Réserver un transat</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Transat {{transat.emplacement}}</p>
+        <p>Type : {{ transat.type }}</p>
+        <div class="mb-3">
+       {# templates/user/new.html.twig #}
+{{ form_start(forms[transat.id], {'action': path('reserver', {'id': transat.id}), 'method': 'POST'}) }}
+
+   {{ form_widget(forms[transat.id]) }}
+    <button class="btn btn-dark mt-3" type="submit">Créer</button>
+{{ form_end(forms[transat.id]) }}
+      </div>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endfor %}
+{% endblock %}
